@@ -49,8 +49,8 @@ def jisx0208(rom, bdf):
    with open(bdf, 'rb') as fp:
       font = reader.read_bdf(fp)
       cp = font.codepoints()
-      for c1 in range(0x21, 0x7e):
-         for c2 in range(0x21, 0x7e):
+      for c1 in range(0x21, 0x7f):
+         for c2 in range(0x21, 0x7f):
             c = c1 * 256 + c2
             i = krom_index(c1, c2)
             if c in cp and i is not None:
