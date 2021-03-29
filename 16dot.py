@@ -8,15 +8,21 @@ from bdflib import reader
 
 import common
 
-def jisx0201(rom, bdf):
+def singlebyte(rom, bdf, *iters):
    with open(bdf, 'rb') as fp:
       font = reader.read_bdf(fp)
       cp = font.codepoints()
-      for c in itertools.chain(range(0x20, 0x7f), range(0xa1, 0xe0)):
+      for c in itertools.chain(*iters):
          if c in cp:
             b = common.to_data(font[c], 8, 16)
             o = 251904 + c * 16
             rom[o:(o + len(b))] = b
+
+def graphics(rom, bdf):
+   singlebyte(rom, bdf, range(0x00, 0x20), range(0x7f, 0xa0), range(0xe0, 0x100))
+
+def jisx0201(rom, bdf):
+   singlebyte(rom, bdf, range(0x20, 0x7f), range(0xa0, 0xe0))
 
 def krom_index(c1, c2):
    if c1 in range(0x21, 0x29) and c2 in range(0x21, 0x7f):
@@ -48,12 +54,15 @@ def jisx0208(rom, bdf):
                rom[o:(o + len(b))] = b
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--graphics', type=str)
 parser.add_argument('--jisx0201', type=str)
 parser.add_argument('--jisx0208', type=str)
 parser.add_argument('--out', type=str)
 
 rom = np.zeros([256 * 1024], dtype=np.int8)
 args = parser.parse_args()
+if (args.graphics is not None):
+   graphics(rom, args.graphics)
 if (args.jisx0201 is not None):
    jisx0201(rom, args.jisx0201)
 if (args.jisx0208 is not None):
