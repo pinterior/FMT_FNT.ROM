@@ -19,6 +19,7 @@ Usage
 
 ```
 python 16dot.py \
+   --graphics bdf/towns16g.bdf \
    --jisx0201 shnm8x16r.bdf \
    --jisx0208 shnmk16min.bdf \
    --out FMT_FNT.ROM
@@ -28,6 +29,7 @@ python 16dot.py \
 
 ```
 python 12dot.py \
+   --graphics bdf/towns12g.bdf \
    --jisx0201 shnm6x12r.bdf \
    --jisx0208 shnmk12.bdf \
    --out FMT_SYS0.F12
