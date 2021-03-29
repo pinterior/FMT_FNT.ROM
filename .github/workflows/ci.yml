@@ -26,7 +26,7 @@ jobs:
         git clone -b upstream https://salsa.debian.org/fonts-team/xfonts-shinonome.git
     - name: Create FMT_FNT.ROM
       run: |
-        python 16dot.py --jisx0201 ./xfonts-shinonome/bdf/shnm8x16r.bdf --jisx0208 ./xfonts-shinonome/bdf/shnmk16min.bdf --out FMT_FNT.ROM
+        python 16dot.py --graphics bdf/towns16g.bdf --jisx0201 ./xfonts-shinonome/bdf/shnm8x16r.bdf --jisx0208 ./xfonts-shinonome/bdf/shnmk16min.bdf --out FMT_FNT.ROM
     - name: Upload FMT_FNT.ROM
       uses: actions/upload-artifact@v2
       with:
@@ -34,7 +34,7 @@ jobs:
         path: FMT_FNT.ROM
     - name: Create FMT_SYS0.F12
       run: |
-        python 12dot.py --jisx0201 ./xfonts-shinonome/bdf/shnm6x12r.bdf --jisx0208 ./xfonts-shinonome/bdf/shnmk12.bdf --out FMT_SYS0.F12
+        python 12dot.py --graphics bdf/towns12g.bdf --jisx0201 ./xfonts-shinonome/bdf/shnm6x12r.bdf --jisx0208 ./xfonts-shinonome/bdf/shnmk12.bdf --out FMT_SYS0.F12
     - name: Upload FMT_SYS0.F12
       uses: actions/upload-artifact@v2
       with:
