@@ -30,6 +30,10 @@ jobs:
     - name: Create FMT_FNT.ROM
       run: |
         python 16dot.py --graphics towns-font/towns16g.bdf --jisx0201 ./xfonts-shinonome/bdf/shnm8x16r.bdf --jisx0208 ./xfonts-shinonome/bdf/shnmk16min.bdf --out FMT_FNT.ROM
+    - name: Add ANK Fonts
+      run: |
+        gcc addANK.c -o addANK
+        ./addANK FMT_FNT.ROM
     - name: Upload FMT_FNT.ROM
       uses: actions/upload-artifact@v2
       with:
