@@ -53,10 +53,28 @@ def jisx0208(rom, bdf):
                o = i * 32
                rom[o:(o + len(b))] = b
 
+def c8x8(rom, bdf, *iters):
+   with open(bdf, 'rb') as fp:
+      font = reader.read_bdf(fp)
+      cp = font.codepoints()
+      for c in itertools.chain(*iters):
+         if c in cp:
+            b = common.to_data(font[c], 8, 8)
+            o = 249856 + c * 8
+            rom[o:(o + len(b))] = b
+
+def graphics8(rom, bdf):
+   c8x8(rom, bdf, range(0x00, 0x20), range(0x7f, 0xa0), range(0xe0, 0x100))
+
+def char8(rom, bdf):
+   c8x8(rom, bdf, range(0x20, 0x7f), range(0xa0, 0xe0))
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--graphics', type=str)
 parser.add_argument('--jisx0201', type=str)
 parser.add_argument('--jisx0208', type=str)
+parser.add_argument('--char8', type=str)
+parser.add_argument('--graphics8', type=str)
 parser.add_argument('--out', type=str)
 
 rom = np.zeros([256 * 1024], dtype=np.int8)
@@ -67,5 +85,9 @@ if (args.jisx0201 is not None):
    jisx0201(rom, args.jisx0201)
 if (args.jisx0208 is not None):
    jisx0208(rom, args.jisx0208)
+if (args.char8 is not None):
+   char8(rom, args.char8)
+if (args.graphics8 is not None):
+   graphics8(rom, args.graphics8)
 
 rom.tofile(args.out)
