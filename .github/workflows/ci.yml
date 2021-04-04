@@ -29,7 +29,7 @@ jobs:
         git clone https://github.com/pinterior/towns-font.git
     - name: Create FMT_FNT.ROM
       run: |
-        python 16dot.py --graphics towns-font/towns16g.bdf --jisx0201 ./xfonts-shinonome/bdf/shnm8x16r.bdf --jisx0208 ./xfonts-shinonome/bdf/shnmk16min.bdf --out FMT_FNT.ROM
+        python 16dot.py --graphics towns-font/towns16g.bdf --jisx0201 ./xfonts-shinonome/bdf/shnm8x16r.bdf --jisx0208 ./xfonts-shinonome/bdf/shnmk16min.bdf --char8 towns-font/ank8.bdf --graphics8 towns-font/ank8g.bdf --out FMT_FNT.ROM
     - name: Upload FMT_FNT.ROM
       uses: actions/upload-artifact@v2
       with:
